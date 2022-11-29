@@ -1,13 +1,14 @@
 import { createRoot } from "react-dom/client";
-import Welcome from "./welcome";
+import Welcome from "./Welcome/welcome";
+import App from "./App/app";
 
 const root = createRoot(document.querySelector("main"));
-fetch("/api/user/id.json")
+fetch("/api/user/me")
     .then((response) => response.json())
     .then((data) => {
-        if (!data.userId) {
+        if (!data) {
             root.render(<Welcome />);
         } else {
-            <div>Logged in!</div>;
+            root.render(<App />);
         }
     });

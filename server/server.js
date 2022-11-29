@@ -2,11 +2,18 @@ const express = require("express");
 const app = express();
 const compression = require("compression");
 const path = require("path");
-const { PORT = 3001, SESSION_SECRET } = process.env;
 require("dotenv").config();
+const { PORT = 3001, SESSION_SECRET } = process.env;
 const cookieSession = require("cookie-session");
+const multer = require("multer");
+const uidSafe = require("uid-safe");
 
-const { createUser, login } = require("../db");
+const {
+    createUser,
+    login,
+    getUserById,
+    updateProfilePicture,
+} = require("../db");
 
 app.use(
     cookieSession({
@@ -21,19 +28,63 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "..", "client", "public")));
 
-app.get("/api/user/id.json", function (req, res) {
-    if (!req.session.userId) {
-        res.json(null);
-    } else {
-        res.json({ userId: req.session.userId });
+const { AWS_BUCKET } = process.env;
+
+const s3upload = require("./s3");
+
+const diskStorage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, path.join(__dirname, "uploads"));
+    },
+    filename: function (req, file, callback) {
+        uidSafe(24).then(function (uid) {
+            callback(null, uid + path.extname(file.originalname));
+        });
+    },
+});
+
+const uploader = multer({
+    storage: diskStorage,
+    limits: {
+        fileSize: 2097152,
+    },
+});
+
+// uploader
+
+app.post(
+    "/api/profileImage",
+    uploader.single("image"),
+    s3upload,
+    async (req, res) => {
+        console.log("req.body: ", req.body);
+
+        const profile_picture_url = `https://s3.amazonaws.com/${AWS_BUCKET}/${req.file.filename}`;
+        const updatedUser = await updateProfilePicture({
+            profile_picture_url,
+            user_id: req.session.user_id,
+        });
+
+        res.json({ profile_picture_url });
     }
+);
+
+app.get("/api/user/me", async (req, res) => {
+    if (!req.session.user_id) {
+        res.json(null);
+        return;
+    }
+    console.log("req.session.user_id", req.session.user_id);
+    const loggedUser = await getUserById(req.session.user_id);
+    console.log(loggedUser);
+    res.json({ loggedUser });
 });
 
 app.post("/api/users", async (req, res) => {
     console.log("req.body", req.body);
     try {
         const newUser = await createUser(req.body);
-        req.session.userId = newUser.id;
+        req.session.user_id = newUser.id;
         res.json({ success: true });
     } catch (error) {
         console.log("POST users", error);
@@ -50,7 +101,7 @@ app.post("/api/login", async (req, res) => {
             });
             return;
         }
-        req.session.userId = user.id;
+        req.session.user_id = user.id;
         res.json({ success: true });
     } catch (error) {
         console.log("POST login", error);

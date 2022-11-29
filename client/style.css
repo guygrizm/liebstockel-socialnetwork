@@ -8,6 +8,8 @@ html {
 
 h1 {
     font-size: 3rem;
+    justify-content: center;
+    align-items: center;
 }
 
 form {
@@ -19,3 +21,15 @@ form label {
     display: flex;
     flex-direction: column;
 }
+
+/* .registration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+ */

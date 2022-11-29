@@ -6,6 +6,7 @@ export default function Welcome() {
     return (
         <div>
             <h1>Welcome to BonfireChat</h1>
+            <img className="logo" src="/logo.svg" alt="logo" />
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Register />} />

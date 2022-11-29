@@ -1,9 +1,7 @@
 require("dotenv").config();
 const spicedPg = require("spiced-pg");
-
+const { hash, genSalt, compare } = require("bcryptjs");
 const { DATABASE_USERNAME, DATABASE_PASSWORD } = process.env;
-console.log(DATABASE_USERNAME);
-console.log(DATABASE_PASSWORD);
 
 const DATABASE_NAME = "social-network";
 
@@ -51,8 +49,30 @@ async function login({ email, password }) {
     }
     return foundUser;
 }
+async function getUserById(id) {
+    const result = await db.query(
+        `
+    SELECT * FROM users WHERE id = $1
+    `,
+        [id]
+    );
+    return result.rows[0];
+}
+
+async function updateProfilePicture({ profile_picture_url, user_id }) {
+    const result = await db.query(
+        `
+    UPDATE users SET profile_picture_url= $1 WHERE id = $2
+    RETURNING *
+    `,
+        [profile_picture_url, user_id]
+    );
+    return result.rows[0];
+}
 
 module.exports = {
     createUser,
     login,
+    getUserById,
+    updateProfilePicture,
 };

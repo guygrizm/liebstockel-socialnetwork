@@ -33,7 +33,7 @@ export default function Register() {
         }
     }
     return (
-        <section>
+        <section className="registration">
             <form onSubmit={onSubmit} className="register">
                 <label htmlFor="fname">
                     First Name
