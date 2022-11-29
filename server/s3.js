@@ -13,7 +13,7 @@ const Bucket = AWS_BUCKET;
 
 function s3upload(request, response, next) {
     if (!request.file) {
-        console.log("[imageboard:s3] file not there");
+        console.log("[social-network:s3] file not there");
         response.sendStatus(400);
         return;
     }
@@ -24,7 +24,7 @@ function s3upload(request, response, next) {
         path,
     } = request.file;
 
-    console.log("[imageboard:s3] uploading to s3...", {
+    console.log("[social-network:s3] uploading to s3...", {
         Bucket,
         Key,
         ContentType,
@@ -41,13 +41,13 @@ function s3upload(request, response, next) {
     })
         .promise()
         .then(() => {
-            console.log("[imageboard:s3] uploaded to s3");
+            console.log("[social-network:s3] uploaded to s3");
             next();
             // delete original file on upload
             fs.unlink(path, () => {});
         })
         .catch((error) => {
-            console.log("[imageboard:s3] error uploading to s3", error);
+            console.log("[social-network:s3] error uploading to s3", error);
             response.sendStatus(500);
         });
 }

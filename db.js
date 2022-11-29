@@ -59,13 +59,14 @@ async function getUserById(id) {
     return result.rows[0];
 }
 
-async function updateProfilePicture({ profile_picture_url, user_id }) {
+// new profile picture
+async function updateProfilePicture({ profile_picture_url, id }) {
     const result = await db.query(
         `
     UPDATE users SET profile_picture_url= $1 WHERE id = $2
     RETURNING *
     `,
-        [profile_picture_url, user_id]
+        [profile_picture_url, id]
     );
     return result.rows[0];
 }

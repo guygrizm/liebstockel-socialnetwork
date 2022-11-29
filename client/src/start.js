@@ -3,7 +3,7 @@ import Welcome from "./Welcome/welcome";
 import App from "./App/app";
 
 const root = createRoot(document.querySelector("main"));
-fetch("/api/user/me")
+fetch("/api/users/me")
     .then((response) => response.json())
     .then((data) => {
         if (!data) {

@@ -53,7 +53,7 @@ const uploader = multer({
 // uploader
 
 app.post(
-    "/api/profileImage",
+    "/api/users/profileImage",
     uploader.single("image"),
     s3upload,
     async (req, res) => {
@@ -62,22 +62,28 @@ app.post(
         const profile_picture_url = `https://s3.amazonaws.com/${AWS_BUCKET}/${req.file.filename}`;
         const updatedUser = await updateProfilePicture({
             profile_picture_url,
-            user_id: req.session.user_id,
+            id: req.session.user_id,
         });
 
-        res.json({ profile_picture_url });
+        res.json(updatedUser);
     }
 );
 
-app.get("/api/user/me", async (req, res) => {
+app.get("/api/users/me", async (req, res) => {
     if (!req.session.user_id) {
         res.json(null);
         return;
     }
-    console.log("req.session.user_id", req.session.user_id);
+    /* console.log("req.session.user_id", req.session.user_id); */
     const loggedUser = await getUserById(req.session.user_id);
-    console.log(loggedUser);
-    res.json({ loggedUser });
+
+    /* console.log(loggedUser); */
+    res.json({
+        id: loggedUser.id,
+        first_name: loggedUser.first_name,
+        last_name: loggedUser.last_name,
+        profile_picture_url: loggedUser.profile_picture_url,
+    });
 });
 
 app.post("/api/users", async (req, res) => {
