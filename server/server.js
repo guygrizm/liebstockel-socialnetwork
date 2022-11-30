@@ -13,6 +13,7 @@ const {
     login,
     getUserById,
     updateProfilePicture,
+    updateBio,
 } = require("../db");
 
 app.use(
@@ -53,7 +54,7 @@ const uploader = multer({
 // uploader
 
 app.post(
-    "/api/users/profileImage",
+    "/api/users/profilePicture",
     uploader.single("image"),
     s3upload,
     async (req, res) => {
@@ -74,15 +75,15 @@ app.get("/api/users/me", async (req, res) => {
         res.json(null);
         return;
     }
-    /* console.log("req.session.user_id", req.session.user_id); */
+
     const loggedUser = await getUserById(req.session.user_id);
 
-    /* console.log(loggedUser); */
     res.json({
         id: loggedUser.id,
         first_name: loggedUser.first_name,
         last_name: loggedUser.last_name,
         profile_picture_url: loggedUser.profile_picture_url,
+        bio: loggedUser.bio,
     });
 });
 
@@ -112,6 +113,17 @@ app.post("/api/login", async (req, res) => {
     } catch (error) {
         console.log("POST login", error);
         res.status(500).json({ error: "Something has gone wrong" });
+    }
+});
+app.post("/api/users/bio", async (req, res) => {
+    try {
+        const id = req.session.user_id;
+        const bio = req.body.bio;
+        const newBio = await updateBio({ bio, id });
+        res.json(newBio);
+        console.log("new Bio", newBio);
+    } catch (error) {
+        console.log("Error users/bio", error);
     }
 });
 

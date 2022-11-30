@@ -71,9 +71,24 @@ async function updateProfilePicture({ profile_picture_url, id }) {
     return result.rows[0];
 }
 
+// new bio
+async function updateBio({ bio, id }) {
+    const result = await db.query(
+        `
+    UPDATE users
+    SET bio = $1
+    WHERE id = $2
+    RETURNING bio
+    `,
+        [bio, id]
+    );
+    return result.rows[0];
+}
+
 module.exports = {
     createUser,
     login,
     getUserById,
     updateProfilePicture,
+    updateBio,
 };

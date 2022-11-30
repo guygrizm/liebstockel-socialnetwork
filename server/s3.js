@@ -10,7 +10,7 @@ const s3 = new S3({
 });
 
 const Bucket = AWS_BUCKET;
-
+console.log("bucket", Bucket);
 function s3upload(request, response, next) {
     if (!request.file) {
         console.log("[social-network:s3] file not there");

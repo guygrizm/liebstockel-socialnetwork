@@ -1,26 +1,26 @@
-export default function Modal({ onClick, updateImg }) {
+export default function Modal({ onClick, updatePic }) {
     function handleChange(event) {
         console.log(event.target.files[0]);
     }
 
-    async function uploadImage(event) {
+    async function uploadPic(event) {
         event.preventDefault();
 
         const formData = new FormData(event.target);
-        const awaitingData = await fetch("/api/users/profileImage", {
+        const awaitingData = await fetch("/api/users/profilePicture", {
             method: "POST",
             body: formData,
         });
         const updatedUser = await awaitingData.json();
-        updateImg(updatedUser);
+        updatePic(updatedUser.profile_picture_url);
     }
 
     return (
         <div className="modal">
-            <div onClick={onClick} className="x">
+            <div onClick={onClick} className="close-button">
                 ✖
             </div>
-            <form onSubmit={uploadImage}>
+            <form onSubmit={uploadPic}>
                 <input
                     onChange={handleChange}
                     type="file"
@@ -28,7 +28,7 @@ export default function Modal({ onClick, updateImg }) {
                     id="image"
                     accept="image/*"
                 />
-                <button>Submit</button>
+                <button>Upload</button>
             </form>
         </div>
     );
