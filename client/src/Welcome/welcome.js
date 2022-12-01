@@ -5,7 +5,7 @@ import Login from "./login";
 export default function Welcome() {
     return (
         <div>
-            <h1>Welcome to BonfireChat</h1>
+            <h1>Welcome to Nemeton</h1>
 
             <BrowserRouter>
                 <Routes>

@@ -84,6 +84,21 @@ async function updateBio({ bio, id }) {
     );
     return result.rows[0];
 }
+// find users
+
+async function findUsers(q) {
+    if (!q) {
+        const result = await db.query(`
+        SELECT * FROM users ORDER BY id DESC LIMIT 3`);
+        return result.rows;
+    }
+    const result = await db.query(
+        `
+    SELECT * FROM users WHERE first_name ILIKE $1`,
+        [q + "%"]
+    );
+    return result.rows;
+}
 
 module.exports = {
     createUser,
@@ -91,4 +106,5 @@ module.exports = {
     getUserById,
     updateProfilePicture,
     updateBio,
+    findUsers,
 };

@@ -14,6 +14,7 @@ const {
     getUserById,
     updateProfilePicture,
     updateBio,
+    findUsers,
 } = require("../db");
 
 app.use(
@@ -124,6 +125,16 @@ app.post("/api/users/bio", async (req, res) => {
         console.log("new Bio", newBio);
     } catch (error) {
         console.log("Error users/bio", error);
+    }
+});
+
+app.get("/api/find-users", async (req, res) => {
+    try {
+        const users = await findUsers(req.query.q);
+        res.json(users);
+    } catch (error) {
+        console.log(error);
+        res.json(null);
     }
 });
 

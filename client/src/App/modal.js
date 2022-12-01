@@ -7,11 +7,11 @@ export default function Modal({ onClick, updatePic }) {
         event.preventDefault();
 
         const formData = new FormData(event.target);
-        const awaitingData = await fetch("/api/users/profilePicture", {
+        const response = await fetch("/api/users/profilePicture", {
             method: "POST",
             body: formData,
         });
-        const updatedUser = await awaitingData.json();
+        const updatedUser = await response.json();
         updatePic(updatedUser.profile_picture_url);
     }
 

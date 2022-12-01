@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import Modal from "./modal";
 import ProfilePicture from "./profilePicture";
 import Profile from "./profile";
+import FindUsers from "./find-users";
 
 export default function App() {
     const [showModal, setShowModal] = useState(false);
@@ -12,7 +15,7 @@ export default function App() {
             const response = await fetch("/api/users/me");
             const parsedJSON = await response.json();
             setUser(parsedJSON);
-            console.log("user in app", user);
+            /* console.log("user in app", user); */
         }
         getUser();
     }, []);
@@ -44,7 +47,7 @@ export default function App() {
         <div className="app">
             <header>
                 <p>Home</p>
-                <ProfilePicture user={user} onClick={onModalOpen} />
+                <ProfilePicture {...user} onClick={onModalOpen} />
             </header>
             {showModal && (
                 <Modal updatePic={updatePic} onClick={onModalClose} />

@@ -10,7 +10,7 @@ export default function BioEditor({ bio, onBioUpdate }) {
     }
 
     async function onSubmit(event) {
-        console.log("BioEditor:onSubmit", newBio);
+        /* console.log("BioEditor:onSubmit", newBio); */
         event.preventDefault();
 
         const response = await fetch("/api/users/bio", {
