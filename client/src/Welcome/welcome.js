@@ -4,9 +4,9 @@ import Login from "./login";
 
 export default function Welcome() {
     return (
-        <div>
+        <div className="welcome">
             <h1>Welcome to Nemeton</h1>
-
+            <img className="logo" src="/logo.png" alt="logo" />
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Register />} />

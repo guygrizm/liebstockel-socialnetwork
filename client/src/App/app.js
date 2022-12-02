@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 
 import Modal from "./modal";
 import ProfilePicture from "./profilePicture";
@@ -43,7 +43,7 @@ export default function App() {
         return <h2>Loading</h2>;
     }
 
-    return (
+    /* return (
         <div className="app">
             <header>
                 <p>Home</p>
@@ -62,5 +62,41 @@ export default function App() {
                 ></Profile>
             }
         </div>
+    ); 
+ */
+    return (
+        <BrowserRouter>
+            <header>
+                <Link to="/">
+                    <img className="logo" src="/logo.png" alt="logo" />
+                </Link>
+                <nav className="menu">
+                    <Link to="/">Home</Link>
+                    <Link to="/users">Find Users</Link>
+                    <a href="/logout">Logout</a>
+                    <ProfilePicture {...user} onClick={onModalOpen} />
+                    {showModal && (
+                        <Modal updatePic={updatePic} onClick={onModalClose} />
+                    )}
+                </nav>
+            </header>
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        <>
+                            <Profile
+                                first_name={user.first_name}
+                                last_name={user.last_name}
+                                profile_picture_url={user.profile_picture_url}
+                                bio={user.bio}
+                                onBioUpdate={onBioUpdate}
+                            />
+                        </>
+                    }
+                />
+                <Route path="/users" element={<FindUsers />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
