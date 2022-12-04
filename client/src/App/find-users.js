@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function FindUsers() {
     const [users, setUsers] = useState([]);
@@ -17,19 +18,9 @@ export default function FindUsers() {
         setQuery(event.target.value);
     }
 
-    /* return (
-        <div className="find-users">
-            <h2>Find Users</h2>
-            <input type="text" placeholder="search" onChange={handleChange} />
-            {users.map((user) => (
-                <div key={user.url}>{user.name}</div>
-            ))}
-        </div>
-    ); */
-
     return (
         <>
-            <h1>Find users</h1>
+            <h1>Find Users</h1>
             <input
                 type="text"
                 placeholder="search user"
@@ -41,12 +32,14 @@ export default function FindUsers() {
             <ul>
                 {users.map((user) => (
                     <li key={user.id}>
-                        <img
-                            className="users-picture "
-                            src={user.profile_picture_url}
-                            alt={`${user.first_name} ${user.last_name}`}
-                        />
-                        {user.first_name} {user.last_name}
+                        <Link to={`/users/${user.id}`}>
+                            <img
+                                className="users-picture "
+                                src={user.profile_picture_url}
+                                alt={`${user.first_name} ${user.last_name}`}
+                            />
+                            {user.first_name} {user.last_name}
+                        </Link>
                     </li>
                 ))}
             </ul>

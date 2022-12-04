@@ -138,6 +138,26 @@ app.get("/api/find-users", async (req, res) => {
     }
 });
 
+// other users
+
+app.get("/api/users/:otherUserId", async (req, res) => {
+    const { otherUserId } = req.params;
+    const { user_id } = req.session;
+    const otherUser = await getUserById(otherUserId);
+    if (otherUserId == user_id || !otherUser) {
+        res.json(null);
+        return;
+    } else {
+        res.json(otherUser);
+    }
+});
+
+// logout
+
+app.get("/logout", (req, res) => {
+    (req.session = null), res.redirect("/");
+});
+
 /////// write only above these functions
 app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));

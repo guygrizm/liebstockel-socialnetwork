@@ -7,6 +7,15 @@ body {
 html {
     font-size: 16px;
 }
+main {
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    padding: 1.5rem 1.5rem;
+}
 
 header {
     height: 4rem;
@@ -55,6 +64,11 @@ h1 {
     font-size: 3rem;
     justify-content: center;
     align-items: center;
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
 }
 
 form {
@@ -80,13 +94,59 @@ form label {
     scale: 1.1;
 }
 
-.logo {
-    width: 70px;
-    height: 70px;
+.welcome-logo {
+    width: 3.75rem;
+}
+.app-logo {
+    width: 3.75rem;
 }
 
-/* .welcome {
+.welcome {
+    max-width: 1000px;
+    margin: auto;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-} */
+    flex: 1;
+    padding: 1.5rem 1.5rem;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+    column-gap: 2rem;
+}
+.users-picture {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.otherUser {
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.profile {
+    display: grid;
+    grid-template-columns: 30% 60%;
+    column-gap: 5%;
+    width: 100%;
+}
+
+ul {
+    display: grid;
+    grid-template-columns: repeat(3, 20rem);
+    grid-template-rows: auto;
+}
+li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+li img {
+    width: 13rem;
+    margin-bottom: 1rem;
+}
+input:text {
+    text-align: center;
+}

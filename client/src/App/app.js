@@ -5,6 +5,7 @@ import Modal from "./modal";
 import ProfilePicture from "./profilePicture";
 import Profile from "./profile";
 import FindUsers from "./find-users";
+import OtherProfile from "./otherProfile";
 
 export default function App() {
     const [showModal, setShowModal] = useState(false);
@@ -43,32 +44,11 @@ export default function App() {
         return <h2>Loading</h2>;
     }
 
-    /* return (
-        <div className="app">
-            <header>
-                <p>Home</p>
-                <ProfilePicture {...user} onClick={onModalOpen} />
-            </header>
-            {showModal && (
-                <Modal updatePic={updatePic} onClick={onModalClose} />
-            )}
-            {
-                <Profile
-                    first_name={user.first_name}
-                    last_name={user.last_name}
-                    profile_picture_url={user.profile_picture_url}
-                    bio={user.bio}
-                    onBioUpdate={onBioUpdate}
-                ></Profile>
-            }
-        </div>
-    ); 
- */
     return (
         <BrowserRouter>
             <header>
                 <Link to="/">
-                    <img className="logo" src="/logo.png" alt="logo" />
+                    <img className="app-logo" src="/logo.png" alt="logo" />
                 </Link>
                 <nav className="menu">
                     <Link to="/">Home</Link>
@@ -96,6 +76,7 @@ export default function App() {
                     }
                 />
                 <Route path="/users" element={<FindUsers />} />
+                <Route path="/users/:otherUserId" element={<OtherProfile />} />
             </Routes>
         </BrowserRouter>
     );
