@@ -82,8 +82,8 @@ form label {
 }
 
 .profile-picture {
-    width: 100px;
-    height: 100px;
+    width: 300px;
+    height: 300px;
     border-radius: 0.3rem;
     cursor: pointer;
 }
@@ -122,15 +122,33 @@ form label {
     border-radius: 50%;
 }
 .otherUser {
-    aspect-ratio: 1/1;
-    object-fit: cover;
-    border-radius: 50%;
+    display: grid;
+    grid-template-columns: 30% 60%;
+    column-gap: 5%;
+    width: 100%;
 }
 .profile {
     display: grid;
     grid-template-columns: 30% 60%;
     column-gap: 5%;
     width: 100%;
+    align-items: center;
+    text-align: center;
+}
+.otherprofile {
+    display: grid;
+    grid-template-columns: 30% 60%;
+    column-gap: 5%;
+    width: 100%;
+    align-items: center;
+    text-align: center;
+}
+
+.otherUserPicture {
+    width: 300px;
+    height: 300px;
+    border-radius: 0.3rem;
+    cursor: pointer;
 }
 
 ul {

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import FriendShipButton from "./friendButton";
 
 export default function OtherProfile() {
     const [otherUser, setOtherUser] = useState({});
@@ -20,12 +21,14 @@ export default function OtherProfile() {
         getUser();
     }, []);
     return (
-        <section className="profile">
+        <section className="otherprofile">
             <img
-                className="otherUser"
+                className="otherUserPicture"
                 src={otherUser.profile_picture_url}
                 alt={`${otherUser.first_name} $otherUser.last_name}`}
             />
+
+            <FriendShipButton user_id={otherUserId} />
             <section>
                 <h2>
                     {otherUser.first_name} {otherUser.last_name}

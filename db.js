@@ -100,6 +100,55 @@ async function findUsers(q) {
     return result.rows;
 }
 
+// friendships functions
+
+async function getFriendship({ sender_id, recipient_id }) {
+    const result = await db.query(
+        `
+    SELECT sender_id, recipient_id, accepted FROM friendships
+    WHERE sender_id = $1 AND recipient_id = $2
+    OR  sender_id = $2 AND recipient_id = $1`,
+        [sender_id, recipient_id]
+    );
+    return result.rows[0];
+}
+
+async function requestFriendship({ sender_id, recipient_id }) {
+    const result = await db.query(
+        `
+    INSERT INTO friendships (sender_id, recipient_id)
+    VALUES ($1,$2)
+    RETURNING *`,
+        [sender_id, recipient_id]
+    );
+    return result.rows[0];
+}
+
+async function acceptFriendship({ sender_id, recipient_id }) {
+    const result = await db.query(
+        `
+    UPDATE friendships 
+    SET accepted = true
+    WHERE sender_id = $1 
+    AND recipient_id = $2
+    RETURNING *`,
+        [sender_id, recipient_id]
+    );
+    return result.rows[0];
+}
+
+async function deleteFriendship({ sender_id, recipient_id }) {
+    const result = await db.query(
+        `
+    DELETE FROM friendships
+    WHERE sender_id = $1 AND recipient_id = $2
+    OR  sender_id = $2 AND recipient_id = $1
+    `,
+        [sender_id, recipient_id]
+    );
+    return result.rows[0];
+}
+
 module.exports = {
     createUser,
     login,
@@ -107,4 +156,8 @@ module.exports = {
     updateProfilePicture,
     updateBio,
     findUsers,
+    getFriendship,
+    requestFriendship,
+    acceptFriendship,
+    deleteFriendship,
 };
