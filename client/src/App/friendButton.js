@@ -8,7 +8,7 @@ function getButtonLabel(status) {
         return "Request pending";
     }
     if (status === "INCOMING_FRIENDSHIP") {
-        return "Friend request ";
+        return "Accept request ";
     }
     if (status === "ACCEPTED_FRIENDSHIP") {
         return "Delete friend";

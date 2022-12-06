@@ -102,13 +102,13 @@ async function findUsers(q) {
 
 // friendships functions
 
-async function getFriendship({ sender_id, recipient_id }) {
+async function getFriendship({ first_id, second_id }) {
     const result = await db.query(
         `
     SELECT sender_id, recipient_id, accepted FROM friendships
     WHERE sender_id = $1 AND recipient_id = $2
     OR  sender_id = $2 AND recipient_id = $1`,
-        [sender_id, recipient_id]
+        [first_id, second_id]
     );
     return result.rows[0];
 }
@@ -137,14 +137,14 @@ async function acceptFriendship({ sender_id, recipient_id }) {
     return result.rows[0];
 }
 
-async function deleteFriendship({ sender_id, recipient_id }) {
+async function deleteFriendship({ first_id, second_id }) {
     const result = await db.query(
         `
     DELETE FROM friendships
     WHERE sender_id = $1 AND recipient_id = $2
     OR  sender_id = $2 AND recipient_id = $1
     `,
-        [sender_id, recipient_id]
+        [first_id, second_id]
     );
     return result.rows[0];
 }

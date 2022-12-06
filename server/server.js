@@ -181,11 +181,9 @@ app.get("/api/friendships/:user_id", async (req, res) => {
         first_id: loggedUserId,
         second_id: otherUserId,
     });
+    console.log("friendship", friendship);
     const status = await getFriendshipStatus(friendship, loggedUserId);
     res.json({ ...friendship, status });
-    /*  const response = await getFriendship(loggedUser, otherUserId);
-    const status = await getFriendshipStatus(response, loggedUser);
-    res.json(status); */
 });
 
 app.post("/api/friendships/:user_id", async (req, res) => {
