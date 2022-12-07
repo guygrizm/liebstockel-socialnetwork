@@ -77,6 +77,7 @@ export default function App() {
                 />
                 <Route path="/users" element={<FindUsers />} />
                 <Route path="/users/:otherUserId" element={<OtherProfile />} />
+                <Route path="/friends" element={<Friends />} />
             </Routes>
         </BrowserRouter>
     );

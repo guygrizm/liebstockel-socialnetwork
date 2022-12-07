@@ -19,6 +19,7 @@ const {
     requestFriendship,
     acceptFriendship,
     deleteFriendship,
+    getFriendships,
 } = require("../db");
 
 app.use(
@@ -225,6 +226,18 @@ app.post("/api/friendships/:user_id", async (req, res) => {
         status = "NO_FRIENDSHIP";
     }
     res.json({ status });
+});
+
+// get friendships
+
+app.get("/api/friendships", async (req, res) => {
+    const friendships = await getFriendships(req.session.user_id);
+    res.json(
+        friendships.map((friendship) => ({
+            ...friendship,
+            status: getFriendshipStatus(friendship, req.session.user_id),
+        }))
+    );
 });
 
 // logout

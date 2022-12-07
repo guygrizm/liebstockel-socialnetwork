@@ -149,6 +149,24 @@ async function deleteFriendship({ first_id, second_id }) {
     return result.rows[0];
 }
 
+//friendships list
+
+async function getFriendships(user_id) {
+    const results = await db.query(
+        `SELECT friendships.accepted,
+        friendships.sender_id,
+        friendships.recipient_id,
+        users.id AS user_id,
+        users.first_name, users.last_name, users.profile_picture_url
+        FROM friendships JOIN users
+        ON (users.id = friendships.sender_id AND friendships.recipient_id = $1)
+        OR (users.id = friendships.recipient_id AND friendships.sender_id = $1 AND accepted = true)`[
+            user_id
+        ]
+    );
+    return results.rows;
+}
+
 module.exports = {
     createUser,
     login,
@@ -160,4 +178,5 @@ module.exports = {
     requestFriendship,
     acceptFriendship,
     deleteFriendship,
+    getFriendships,
 };
