@@ -1,31 +1,84 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import UserView from "./userView.js";
 
 export default function SortFriendships() {
-    const [friends, setFriends] = useState([]);
+    const [friendships, setFriendships] = useState([]);
+    console.log(friendships);
     const [wannabes, setWannabes] = useState([]);
 
     useEffect(() => {
         async function getFriendships() {
             const response = await fetch("/api/friendships");
             const data = await response.json();
+            console.log("data from friendships", data);
 
-            setFriends(data.filter((user) => user.is_friend));
-            setWannabes(data.filter((user) => !user.is_friend));
+            setFriendships(data.filter((user) => user.accepted));
+            setWannabes(data.filter((user) => !user.accepted));
         }
         getFriendships();
     }, []);
 
-    function onUserClick(id, action) {
-        if (action === "unfriend") {
-            const newFriends = friends.filter((x) => x.id !== id);
-            setFriends(newFriends);
-        }
+    async function onClick(id, action) {
         if (action === "accept") {
-            const currentWannabe = wannabes.find((x) => x.id === id);
-            const newWannabes = wannabes.filter((x) => x.id !== id);
-            const newFriends = [...friends, currentWannabe];
+            const response = await fetch(`/api/friendships/${id}`, {
+                method: "POST",
+            });
+            const friendship = await response.json();
+            console.log("friendship", friendship);
+            console.log("this-id", id);
+
+            //
+
+            const currentWannabe = wannabes.find((user) => user.user_id === id);
+
+            const newWannabes = wannabes.filter((user) => user.user_id !== id);
+
+            const newFriends = [...friendships, currentWannabe];
             setWannabes(newWannabes);
-            setFriends(newFriends);
+            setFriendships(newFriends);
+        }
+
+        if (action === "unfriend") {
+            const response = await fetch(`/api/friendships/${id}`, {
+                method: "POST",
+            });
+            const friendship = await response.json();
+            console.log("friendship", friendship);
+            const newFriends = friendships.filter(
+                (user) => user.user_id !== id
+            );
+            setFriendships(newFriends);
         }
     }
+
+    return (
+        <section>
+            <h2>Friends</h2>
+            <ul className="userView">
+                {friendships.map((friendships) => (
+                    <li key={friendships.user_id}>
+                        <UserView
+                            {...friendships}
+                            onClick={onClick}
+                            action="unfriend"
+                        />
+                    </li>
+                ))}
+            </ul>
+
+            <h2>Wannabes</h2>
+
+            <ul className="userView">
+                {wannabes.map((friendships) => (
+                    <li key={friendships.user_id}>
+                        <UserView
+                            {...friendships}
+                            onClick={onClick}
+                            action="accept"
+                        />
+                    </li>
+                ))}
+            </ul>
+        </section>
+    );
 }

@@ -6,6 +6,7 @@ import ProfilePicture from "./profilePicture";
 import Profile from "./profile";
 import FindUsers from "./find-users";
 import OtherProfile from "./otherProfile";
+import SortFriendships from "./friends";
 
 export default function App() {
     const [showModal, setShowModal] = useState(false);
@@ -77,7 +78,7 @@ export default function App() {
                 />
                 <Route path="/users" element={<FindUsers />} />
                 <Route path="/users/:otherUserId" element={<OtherProfile />} />
-                <Route path="/friends" element={<Friends />} />
+                <Route path="/friends" element={<SortFriendships />} />
             </Routes>
         </BrowserRouter>
     );

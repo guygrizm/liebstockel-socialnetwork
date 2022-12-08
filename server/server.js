@@ -136,6 +136,7 @@ app.post("/api/users/bio", async (req, res) => {
 app.get("/api/find-users", async (req, res) => {
     try {
         const users = await findUsers(req.query.q);
+
         res.json(users);
     } catch (error) {
         console.log(error);
@@ -198,7 +199,7 @@ app.post("/api/friendships/:user_id", async (req, res) => {
 
     const currentStatus = getFriendshipStatus(friendship, loggedUserId);
     let status;
-
+    console.log("currentStatus", currentStatus);
     if (currentStatus === "NO_FRIENDSHIP") {
         await requestFriendship({
             sender_id: loggedUserId,
@@ -232,6 +233,7 @@ app.post("/api/friendships/:user_id", async (req, res) => {
 
 app.get("/api/friendships", async (req, res) => {
     const friendships = await getFriendships(req.session.user_id);
+    console.log("friendships", friendships);
     res.json(
         friendships.map((friendship) => ({
             ...friendship,

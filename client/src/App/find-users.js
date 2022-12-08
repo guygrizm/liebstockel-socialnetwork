@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 
 export default function FindUsers() {
     const [users, setUsers] = useState([]);
+
     const [query, setQuery] = useState("");
 
     useEffect(() => {
         (async () => {
             const response = await fetch(`/api/find-users?q=${query}`);
             const data = await response.json();
+            console.log("data", data);
 
             setUsers(data);
         })();

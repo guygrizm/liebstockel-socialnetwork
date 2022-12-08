@@ -94,7 +94,7 @@ async function findUsers(q) {
     }
     const result = await db.query(
         `
-    SELECT * FROM users WHERE first_name ILIKE $1`,
+    SELECT * FROM users WHERE first_name ILIKE $1 LIMIT 3`,
         [q + "%"]
     );
     return result.rows;
@@ -160,9 +160,8 @@ async function getFriendships(user_id) {
         users.first_name, users.last_name, users.profile_picture_url
         FROM friendships JOIN users
         ON (users.id = friendships.sender_id AND friendships.recipient_id = $1)
-        OR (users.id = friendships.recipient_id AND friendships.sender_id = $1 AND accepted = true)`[
-            user_id
-        ]
+        OR (users.id = friendships.recipient_id AND friendships.sender_id = $1 AND accepted = true)`,
+        [user_id]
     );
     return results.rows;
 }
