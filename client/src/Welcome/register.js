@@ -56,7 +56,9 @@ export default function Register() {
                         required
                     />
                 </label>
-                <button type="Submit">Register</button>
+                <button className="registerButton" type="Submit">
+                    Register
+                </button>
                 {error && <p className="error">{error}</p>}
             </form>
             <Link to="/login">Click here to Login</Link>

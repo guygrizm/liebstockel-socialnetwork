@@ -52,7 +52,7 @@ export default function SortFriendships() {
     }
 
     return (
-        <section>
+        <section className="friends-page">
             <h2>Friends</h2>
             <ul className="userView">
                 {friendships.map((friendships) => (

@@ -12,7 +12,7 @@ export default function UserView({
         <>
             <Link to={`/users/${user_id}`}>
                 <img
-                    className="circle"
+                    className="userViewImg"
                     src={profile_picture_url}
                     alt={`${first_name} ${last_name}`}
                 />

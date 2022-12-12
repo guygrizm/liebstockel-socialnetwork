@@ -21,9 +21,10 @@ export default function FindUsers() {
     }
 
     return (
-        <>
+        <div className="find-users">
             <h1>Find Users</h1>
             <input
+                className="search-user"
                 type="text"
                 placeholder="search user"
                 onChange={handleChange}
@@ -31,10 +32,10 @@ export default function FindUsers() {
 
             {!query && <h3>New Users</h3>}
 
-            <ul>
+            <ul className="users-list">
                 {users.map((user) => (
                     <li key={user.id}>
-                        <Link to={`/users/${user.id}`}>
+                        <Link className="new-users" to={`/users/${user.id}`}>
                             <img
                                 className="users-picture "
                                 src={user.profile_picture_url}
@@ -45,6 +46,6 @@ export default function FindUsers() {
                     </li>
                 ))}
             </ul>
-        </>
+        </div>
     );
 }

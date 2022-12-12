@@ -1,5 +1,14 @@
 const express = require("express");
 const app = express();
+const server = require("http").Server(app);
+const socketConnect = require("socket.io");
+const io = socketConnect(server, {
+    allowRequest: (request, callback) =>
+        callback(
+            null,
+            request.headers.referer.startsWith(`http://localhost:3000`)
+        ),
+});
 const compression = require("compression");
 const path = require("path");
 require("dotenv").config();
@@ -20,15 +29,18 @@ const {
     acceptFriendship,
     deleteFriendship,
     getFriendships,
+    getMessages,
+    createMessages,
 } = require("../db");
 
-app.use(
-    cookieSession({
-        secret: SESSION_SECRET,
-        maxAge: 1000 * 60 * 60 * 24 * 14,
-        sameSite: true,
-    })
-);
+const cookieSessionMiddleware = cookieSession({
+    secret: SESSION_SECRET,
+    maxAge: 1000 * 60 * 60 * 24 * 14,
+});
+app.use(cookieSessionMiddleware);
+io.use((socket, next) => {
+    cookieSessionMiddleware(socket.request, socket.request.res, next);
+});
 
 app.use(compression());
 app.use(express.urlencoded({ extended: false }));
@@ -136,8 +148,12 @@ app.post("/api/users/bio", async (req, res) => {
 app.get("/api/find-users", async (req, res) => {
     try {
         const users = await findUsers(req.query.q);
+        const { user_id } = req.session;
+        console.log("user_id", user_id);
+        const newUsers = users.filter((user) => user.id !== user_id);
+        console.log("newUsers", newUsers);
 
-        res.json(users);
+        res.json(newUsers);
     } catch (error) {
         console.log(error);
         res.json(null);
@@ -253,6 +269,35 @@ app.get("*", function (req, res) {
     res.sendFile(path.join(__dirname, "..", "client", "index.html"));
 });
 
-app.listen(PORT, function () {
+io.on("connection", async (socket) => {
+    console.log("[social:socket] incoming socked connection", socket.id);
+    console.log("session", socket.request.session);
+    const { user_id } = socket.request.session;
+    if (!user_id) {
+        return socket.disconnect(true);
+    }
+    const chatMessages = await getMessages();
+
+    socket.emit("chat", chatMessages);
+
+    socket.on("newMessage", async function ({ message }) {
+        const sender_id = user_id;
+        const chatData = await createMessages({ sender_id, message });
+        const { first_name, last_name, profile_picture_url } =
+            await getUserById(sender_id);
+        const newChatData = {
+            ...chatData,
+            first_name,
+            last_name,
+            profile_picture_url,
+            sender_id,
+            message,
+        };
+
+        io.emit("newMessage", newChatData);
+    });
+});
+
+server.listen(PORT, function () {
     console.log(`Express server listening on port ${PORT}`);
 });

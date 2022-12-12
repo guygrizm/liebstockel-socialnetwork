@@ -16,6 +16,9 @@ export default function Profile({
                 profile_picture_url={profile_picture_url}
             />
             <h2>
+                {" "}
+                Welcome, <br></br>
+                <br></br>
                 {first_name} {last_name}
             </h2>
             <BioEditor bio={bio} onBioUpdate={onBioUpdate} />

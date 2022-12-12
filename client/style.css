@@ -1,5 +1,5 @@
 body {
-    background-color: ghostwhite;
+    background-color: rgb(210, 176, 111);
     margin: 0;
     height: 100%;
 }
@@ -18,7 +18,7 @@ main {
 
 header {
     height: 4rem;
-    background-color: dodgerblue;
+    background-color: ghostwhite;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -47,7 +47,7 @@ header .profile-picture {
     position: absolute;
     top: 2rem;
     right: 2rem;
-    color: white;
+    color: black;
 }
 
 .modal-content {
@@ -115,10 +115,29 @@ form label {
     align-items: center;
     column-gap: 2rem;
 }
+
+.registration {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.registerButton {
+    width: 4rem;
+
+    align-self: center;
+}
 .users-picture {
     aspect-ratio: 1/1;
     object-fit: cover;
-    border-radius: 50%;
+}
+
+.bio-editor {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
 }
 .otherUser {
     display: grid;
@@ -127,20 +146,18 @@ form label {
     width: 100%;
 }
 .profile {
-    display: grid;
-    grid-template-columns: 30% 60%;
-    column-gap: 5%;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    text-align: center;
+    padding-top: 4px;
 }
 .otherprofile {
-    display: grid;
-    grid-template-columns: 30% 60%;
-    column-gap: 5%;
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     align-items: center;
     text-align: center;
+    padding-top: 4px;
 }
 
 .otherUserPicture {
@@ -148,22 +165,83 @@ form label {
     height: 300px;
     border-radius: 0.3rem;
     cursor: pointer;
+    padding-bottom: 10px;
 }
 
-ul {
+.users-list {
     display: grid;
     grid-template-columns: repeat(3, 20rem);
     grid-template-rows: auto;
+    list-style: none;
 }
-li {
+li.users-list {
     display: flex;
     flex-direction: column;
+
     align-items: center;
 }
-li img {
+.users-picture {
     width: 13rem;
     margin-bottom: 1rem;
 }
 input:text {
     text-align: center;
+}
+
+.chat-page {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.chatPic {
+    width: 3.75rem;
+}
+.find-users {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.new-users {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.userView {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    padding-left: 2px;
+}
+
+.friends-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.userViewImg {
+    width: 13rem;
+    margin-bottom: 1rem;
+}
+.chat-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+.chats-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+}
+
+.chatSender {
+    color: blue;
+    font-size: 14px;
+}
+.chatMsg {
+    color: rgb(204, 21, 21);
 }

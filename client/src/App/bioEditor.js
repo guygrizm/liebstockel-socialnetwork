@@ -41,11 +41,18 @@ export default function BioEditor({ bio, onBioUpdate }) {
         );
     }
 
-    const buttonLabel = isEditing ? "Cancel" : "Edit bio";
+    const buttonLabel = isEditing ? "Cancel" : "Edit Bio";
 
     return (
         <div className="bio-editor">
-            {isEditing ? renderForm() : <p>{bio}</p>}
+            {isEditing ? (
+                renderForm()
+            ) : (
+                <p>
+                    My Bio:
+                    {bio}
+                </p>
+            )}
             <button onClick={onEditButtonClick}>{buttonLabel}</button>
         </div>
     );

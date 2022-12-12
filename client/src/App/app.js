@@ -7,6 +7,7 @@ import Profile from "./profile";
 import FindUsers from "./find-users";
 import OtherProfile from "./otherProfile";
 import SortFriendships from "./friends";
+import Chat from "./chat";
 
 export default function App() {
     const [showModal, setShowModal] = useState(false);
@@ -54,6 +55,8 @@ export default function App() {
                 <nav className="menu">
                     <Link to="/">Home</Link>
                     <Link to="/users">Find Users</Link>
+                    <Link to="/chat">Chat Room</Link>
+                    <Link to="/friends">Friends</Link>
                     <a href="/logout">Logout</a>
                     <ProfilePicture {...user} onClick={onModalOpen} />
                     {showModal && (
@@ -79,6 +82,7 @@ export default function App() {
                 <Route path="/users" element={<FindUsers />} />
                 <Route path="/users/:otherUserId" element={<OtherProfile />} />
                 <Route path="/friends" element={<SortFriendships />} />
+                <Route path="/chat" element={<Chat />} />
             </Routes>
         </BrowserRouter>
     );
