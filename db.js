@@ -188,6 +188,15 @@ async function createMessages({ sender_id, message }) {
     );
     return result.rows[0];
 }
+
+// delete functions
+
+//delete user
+
+async function deleteUser(id) {
+    return db.query(`DELETE FROM users WHERE id = $1`, [id]);
+}
+
 module.exports = {
     createUser,
     login,
@@ -202,4 +211,6 @@ module.exports = {
     getFriendships,
     getMessages,
     createMessages,
+
+    deleteUser,
 };

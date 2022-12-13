@@ -11,19 +11,22 @@ CREATE TABLE users (
     password_hash VARCHAR NOT NULL,
     bio TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    
 );
 
 CREATE TABLE friendships(
     id SERIAL PRIMARY KEY,
-    sender_id INT REFERENCES users(id) NOT NULL,
-    recipient_id INT REFERENCES users(id) NOT NULL,
+    sender_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    recipient_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     accepted BOOLEAN DEFAULT false,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    
 );
 
 CREATE TABLE chat(
     id SERIAL PRIMARY KEY,
-    sender_id INT REFERENCES users(id) NOT NULL,
+    sender_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     message TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    
 );

@@ -1,7 +1,8 @@
 import ProfilePicture from "./profilePicture";
 import BioEditor from "./bioEditor.js";
+import Delete from "./delete.js";
 
-export default function Profile({
+export default function Account({
     first_name,
     last_name,
     profile_picture_url,
@@ -16,12 +17,11 @@ export default function Profile({
                 profile_picture_url={profile_picture_url}
             />
             <h2>
-                {" "}
-                Welcome, <br></br>
-                <br></br>
+                Welcome, &nbsp;
                 {first_name} {last_name}
             </h2>
             <BioEditor bio={bio} onBioUpdate={onBioUpdate} />
+            <Delete></Delete>
         </section>
     );
 }

@@ -31,6 +31,9 @@ const {
     getFriendships,
     getMessages,
     createMessages,
+    deleteFrinedship,
+    deleteUser,
+    deleteChat,
 } = require("../db");
 
 const cookieSessionMiddleware = cookieSession({
@@ -256,6 +259,21 @@ app.get("/api/friendships", async (req, res) => {
             status: getFriendshipStatus(friendship, req.session.user_id),
         }))
     );
+});
+
+// delete user
+
+app.post("/api/delete", async (req, res) => {
+    try {
+        const { user_id } = req.session;
+
+        await deleteUser(user_id);
+
+        req.session = null;
+        res.json("ok");
+    } catch (error) {
+        console.log("error delete", error);
+    }
 });
 
 // logout

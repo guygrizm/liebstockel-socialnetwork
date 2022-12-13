@@ -4,6 +4,10 @@ export default function ProfilePicture({
     last_name,
     profile_picture_url = "https://via.placeholder.com/100x100",
 }) {
+    if (profile_picture_url === null) {
+        profile_picture_url = "https://via.placeholder.com/100x100";
+    }
+    console.log(profile_picture_url);
     return (
         <img
             onClick={onClick}

@@ -63,17 +63,20 @@ export default function Chat() {
             <h1>Chat Room</h1>
             <ul className="chats-container" ref={listRef}>
                 {chatMessage.map((message) => (
-                    <li key={message.id}>
-                        <p className="chatSender">
-                            {message.first_name} {message.last_name}
-                        </p>
-                        <div className="chatblock">
-                            <img
-                                src={message.profile_picture_url}
-                                className="chatPic"
-                            />
-                            <p className="chatMsg">{message.message}</p>
+                    <li className="chat-list" key={message.id}>
+                        <div className="chat-change">
+                            <p className="chatSender">
+                                {message.first_name} {message.last_name}
+                            </p>
+
+                            <div className="chatblock">
+                                <img
+                                    src={message.profile_picture_url}
+                                    className="chatPic"
+                                />
+                            </div>
                         </div>
+                        <p className="chatMsg">{message.message}</p>
                     </li>
                 ))}
             </ul>

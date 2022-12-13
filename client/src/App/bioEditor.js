@@ -48,10 +48,10 @@ export default function BioEditor({ bio, onBioUpdate }) {
             {isEditing ? (
                 renderForm()
             ) : (
-                <p>
-                    My Bio:
+                <h4>
+                    Something About Myself: &nbsp;
                     {bio}
-                </p>
+                </h4>
             )}
             <button onClick={onEditButtonClick}>{buttonLabel}</button>
         </div>

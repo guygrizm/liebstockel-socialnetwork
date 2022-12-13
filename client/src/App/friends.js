@@ -56,7 +56,7 @@ export default function SortFriendships() {
             <h2>Friends</h2>
             <ul className="userView">
                 {friendships.map((friendships) => (
-                    <li key={friendships.user_id}>
+                    <li className="friend-list" key={friendships.user_id}>
                         <UserView
                             {...friendships}
                             onClick={onClick}
@@ -70,7 +70,7 @@ export default function SortFriendships() {
 
             <ul className="userView">
                 {wannabes.map((friendships) => (
-                    <li key={friendships.user_id}>
+                    <li className="wannabe-list" key={friendships.user_id}>
                         <UserView
                             {...friendships}
                             onClick={onClick}

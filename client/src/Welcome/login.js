@@ -42,7 +42,7 @@ export default function Login() {
                     Password
                     <input type="password" name="password" required />
                 </label>
-                <button>Login</button>
+                <button className="loginButton">Login</button>
                 {error && <p className="error">{error}</p>}
             </form>
             <Link to="/">Click here to Register</Link>

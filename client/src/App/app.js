@@ -18,7 +18,7 @@ export default function App() {
             const response = await fetch("/api/users/me");
             const parsedJSON = await response.json();
             setUser(parsedJSON);
-            /* console.log("user in app", user); */
+            console.log("user in app", parsedJSON);
         }
         getUser();
     }, []);
